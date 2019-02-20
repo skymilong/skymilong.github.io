@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://skymilong.cn/"/>
-  <updated>2019-02-15T03:29:37.892Z</updated>
+  <updated>2019-02-20T02:40:37.474Z</updated>
   <id>http://skymilong.cn/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>观察者模式和发布订阅模式</title>
+    <link href="http://skymilong.cn/2019/02/20/%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F%E5%92%8C%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85%E6%A8%A1%E5%BC%8F/"/>
+    <id>http://skymilong.cn/2019/02/20/观察者模式和发布订阅模式/</id>
+    <published>2019-02-20T02:39:37.273Z</published>
+    <updated>2019-02-20T02:40:37.474Z</updated>
+    
+    <content type="html"><![CDATA[<pre><code>看了设计模式的书，忽然发现观察者模式和发布/订阅模式还是有点区别的，于是今天就整理一下。</code></pre><hr><p>Pub-Sub（A） 和观察者模式（B）最主要的区别在：A模式的数据源的更新不会主动通知订阅方，而是放入调度中心，如Kafka：都放入了一个指定的topic。而B模式则会在数据更新时主动调用订阅方的update方法。观察者模式中，发布者维护了一个订阅者的集合。 订阅者也保存了发布者的引用。而发布订阅模式中，发布者和订阅者并无联系。<br>如图：<br><img src="https://s2.ax1x.com/2019/02/20/k2FHAI.png" alt="k2FHAI.png"><br>观察者模式与发布订阅模式都是定义了一个一对多的依赖关系，当有关状态发生变更时则执行相应的更新。所以我觉得他们本质上应该是一样的。只是对应场景不同。以上是我对观察者模式和发布订阅模式学习之后的一些理解，望指正。</p><h1 id="Wiki"><a href="#Wiki" class="headerlink" title="Wiki:"></a>Wiki:</h1><p><strong>发布/订阅</strong></p><blockquote><p>在软件架构中，发布-订阅是一种消息范式，消息的发送者（称为发布者）不会将消息直接发送给特定的接收者（称为订阅者）。而是将发布的消息分为不同的类别，无需了解哪些订阅者（如果有的话）可能存在。同样的，订阅者可以表达对一个或多个类别的兴趣，只接收感兴趣的消息，无需了解哪些发布者（如果有的话）存在。 发布/<br>9 KB（1,420个字） - 2018年1月3日 (三) 06:30</p></blockquote><p><strong>观察者模式</strong></p><blockquote><p>观察者模式是软件设计模式的一种。在此种模式中，一个目标物件管理所有相依于它的观察者物件，并且在它本身的状态改变时主动发出通知。这通常透过呼叫各观察者所提供的方法来实现。此种模式通常被用来实时事件处理系统。 参与本模式的各类别列出如下。成员函式以模拟的方式列出。<br>16 KB（1,956个字） - 2016年4月9日 (六) 06:51</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;pre&gt;&lt;code&gt;看了设计模式的书，忽然发现观察者模式和发布/订阅模式还是有点区别的，于是今天就整理一下。
+&lt;/code&gt;&lt;/pre&gt;&lt;hr&gt;
+&lt;p&gt;Pub-Sub（A） 和观察者模式（B）最主要的区别在：A模式的数据源的更新不会主动通知订阅方，而是放入调度中心，如Kafka
+      
+    
+    </summary>
+    
+      <category term="后端" scheme="http://skymilong.cn/categories/%E5%90%8E%E7%AB%AF/"/>
+    
+    
+      <category term="设计模式" scheme="http://skymilong.cn/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>搜狗拼音绅士皮肤分享（斯文+流氓）</title>
