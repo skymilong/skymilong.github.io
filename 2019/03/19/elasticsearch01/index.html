@@ -16,10 +16,10 @@
     <link rel="dns-prefetch" href="http://skymilong.cn">
     <!--SEO-->
 
-    <meta name="keywords" content="java">
+    <meta name="keywords" content="elasticsearch">
 
 
-    <meta name="description" content="null">
+    <meta name="description" content="前段时间要实现elasticsearch的update_by_query操作，因为现在项目用的是JAVA rest客户端版本是5.6，所以high-client 没有update_by_quer...">
 
 <meta name="baidu-site-verification" content="VlmXmLfhqs">
 
@@ -31,7 +31,7 @@
     <!--Title-->
 
 
-<title>Tag: 经验分享 | skymilong&#39;s blog</title>
+<title>elasticsearch 5.6 JAVA客户端LowClient实现update_by_query | skymilong&#39;s blog</title>
 
 
     <link rel="alternate" href="/atom.xml" title="skymilong&#39;s blog" type="application/atom+xml">
@@ -151,37 +151,127 @@
     <section class="content-wrap">
         <div class="container">
             <div class="row">
-                <main class="col-md-8 main-content ">
-                    <h3>
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="elasticsearch 5.6 JAVA客户端LowClient实现update_by_query">
+            
+	            elasticsearch 5.6 JAVA客户端LowClient实现update_by_query
+            
+        </h1>
+        <div class="post-meta">
     
-        经验分享
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/后端/">后端</a>
+        </span>
     
-    
-</h3>
 
-    <article class="post">
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/elasticsearch/">elasticsearch</a>
+                
+            </span>
+        </span>
+    
+
+    
         
-        <div class="post-content">
-            <div class="post-head home-post-head">
-                <h1 class="post-title">
-                    <a href="/2019/02/27/为什么重写equals方法一定也要重写hashCode/">为什么重写equals方法一定也要重写hashCode？</a>
-                </h1>
-                <div class="post-meta">  &bull;
-                    <time class="post-date" datetime="" title="">
-                        2019年02月27日
-                    </time>
-                </div>
-            </div>
-            <p class="brief">
-                
-                    重写 equals() 首先明确你的目的首先我强调一下，没事别去重写eqauls()方法,除非真的需要。很多时候，我们需要判断两个对象是否相等，比如说一个等腰三角形类：triangle123456public class Triang...
-                
-            </p>
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2019/03/19</span>
+        </span>
+        
+            <span class="fa-wrap">
+                <i class="fa fa-eye"></i>
+                <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    
+</div>
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <p>前段时间要实现elasticsearch的update_by_query操作，因为现在项目用的是JAVA rest客户端版本是5.6，所以high-client 没有update_by_query的方法。所以只好通过low-client的performRequest方法发送Post请求。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">StringBuilder stringBuilder = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        Set&lt;Map.Entry&lt;String, Object&gt;&gt; set = map.entrySet();</span><br><span class="line">        <span class="keyword">for</span> (Map.Entry&lt;String, Object&gt; obj : set)&#123;</span><br><span class="line">            stringBuilder.append(<span class="string">"ctx._source."</span>+obj.getKey()+<span class="string">"='"</span>+obj.getValue()+<span class="string">"';"</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        QueryBuilder query = getQueryBuilderFromMap(queryParam);</span><br><span class="line">        String scriptStr =String.format( <span class="string">"\"script\":&#123;\n"</span> +</span><br><span class="line">                <span class="string">"    \"source\":\"%s\",\n"</span> +</span><br><span class="line">                <span class="string">"    \"lang\": \"painless\"\n"</span> +</span><br><span class="line">                <span class="string">"  &#125;"</span>,stringBuilder.toString());</span><br><span class="line">        HttpEntity entity=<span class="keyword">new</span> NStringEntity(String.format(<span class="string">"&#123;\"query\":%s,%s&#125;"</span>,query.toString(),scriptStr), ContentType.APPLICATION_JSON);</span><br><span class="line">        Response res = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            res = esClientManager.getLowClient().performRequest(<span class="string">"POST"</span>,</span><br><span class="line">                    <span class="string">"/"</span>+index+<span class="string">"/"</span>+type+<span class="string">"/_update_by_query"</span>,</span><br><span class="line">                    Collections.EMPTY_MAP, entity);</span><br><span class="line">            logger.info(res.toString());</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            logger.error(<span class="string">""</span>, <span class="string">"update xxx to normal is error."</span>, e.getMessage());</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure></p>
+<p>类似问题应该都可以这样解决。</p>
+
+    </div>
+    
+        <div class="reward" ontouchstart="">
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+                <span class="reward-type">
+                    <img class="alipay" src="../../../../img/zfb.jpg"><b>支付宝打赏</b>
+                </span>
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="../../../../img/wx.png"><b>微信打赏</b>
+                </span>
+            
         </div>
-    </article>
- 
+    </div>
+    <p class="reward-tip">赞赏是不耍流氓的鼓励</p>
+</div>
 
 
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">skymilong</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+        <a href="/2019/02/27/为什么重写equals方法一定也要重写hashCode/" class="next-post btn btn-default" title="为什么重写equals方法一定也要重写hashCode？">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">为什么重写equals方法一定也要重写hashCode？</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+	
+    <div id="sky-vcomments" class="valine"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="/assets/valine.min.js"></script>
+
+    <script>
+        new Valine({
+            av: AV,
+            el: '#sky-vcomments',
+            appId: 'ijSgkbeN9JBuYk81UPpFkPDx-gzGzoHsz',
+            appKey: '3oiIti1e4sT1vihpJkLf7vns',
+            placeholder: '说点什么吧',
+            notify: false,
+            verify: false,
+            avatar: 'mp',
+            meta: 'nick,mail'.split(','),
+            pageSize: '10',
+            path: window.location.pathname,
+            lang: 'zh-cn'.toLowerCase()
+        })
+    </script>
+
+
+    </div>
 
 
 
@@ -189,126 +279,14 @@
 
                 </main>
                 
-                    
-    <aside class="col-md-4 sidebar">
-        
-        
+                    <aside id="article-toc" role="navigation" class="col-md-4">
     <div class="widget">
-        <h3 class="title">搜索</h3>
-        <div id="search-form">
-            <div id="result-mask" class="hide"></div>
-            <div class="search-area">
-                
-                    <input id="search-key" type="search" autocomplete="off" placeholder="Search What？">
-                    <button type="button" class="search-form-submit" id="search-local">localSearch</button>
-                
-                
-            </div>
-            <div id="result-wrap" class="hide">
-                <div id="search-result"></div>
-            </div>
-            <div class="hide">
-                <template id="search-tpl">
-                    <div class="item">
-                        <a href="/{path}" title="{title}">
-                            <div class="title">{title}</div>
-                            <div class="content">{content}</div>
-                        </a>
-                    </div>
-                </template>
-            </div>
-        </div>
-    </div>
-
+        <h3 class="title">Table of Contents</h3>
         
-        
-    <div class="widget">
-        <h3 class="title">公告</h3>
-        <div class="notification">
-            <p>
-    暂无
-</p>
-        </div>
-    </div>
-
-        
-        
-    <div class="widget">
-      <h3 class="title">关于我</h3> 
-        <div class="content social">
-            
-	            <a href="//github.com/skymilong" rel="external nofollow" title="Github" target="_blank">
-			    	<i class="git fa fa-git"></i>
-			    </a>
-            
-	            <a href="mailto:skymilong@gmail.com" rel="external nofollow" title="邮箱" target="_blank">
-			    	<i class="envelope-o fa fa-envelope-o"></i>
-			    </a>
-            
-	            <a href="/" rel="external nofollow" title="联系QQ" target="_blank">
-			    	<i class="qq fa fa-qq"></i>
-			    </a>
-            
-	            <a href="/" rel="external nofollow" title="微信" target="_blank">
-			    	<i class="weixin fa fa-weixin"></i>
-			    </a>
-            
-	            <a href="/" rel="external nofollow" title="QQ群" target="_blank">
-			    	<i class="users fa fa-users"></i>
-			    </a>
-            
-	            <a href="/atom.xml" rel="external nofollow" title="RSS" target="_blank">
-			    	<i class="feed fa fa-feed"></i>
-			    </a>
-            
-        </div>
-    </div>
-
-
-        
-        
-    <div class="widget">
-        <h3 class="title">分类</h3>
-        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/后端/"><i class="fa" aria-hidden="true">后端</i></a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/"><i class="fa" aria-hidden="true">工具</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/软件/"><i class="fa" aria-hidden="true">软件</i></a><span class="category-list-count">1</span></li></ul>
-    </div>
-
-
-        
-        
-    <div class="widget">
-        <h3 class="title">归档</h3>
-        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/"><i class="fa" aria-hidden="true">2019年03月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/"><i class="fa" aria-hidden="true">2019年02月</i></a><span class="archive-list-count">5</span></li></ul>
-    </div>
-
-
-        
-        
-  <div class="widget">
-    <h3 class="title">标签云</h3>
-    <div class="content tag-cloud">
-        
-            <canvas width="300" height="300" id="tag-cloud-3d">
-                <a href="/tags/elasticsearch/" style="font-size: 10px;">elasticsearch</a> <a href="/tags/异常问题/" style="font-size: 10px;">异常问题</a> <a href="/tags/经验分享/" style="font-size: 10px;">经验分享</a> <a href="/tags/补丁/" style="font-size: 20px;">补丁</a> <a href="/tags/设计模式/" style="font-size: 10px;">设计模式</a>
-            </canvas>
+            <p>暂无目录</p>
         
     </div>
-  </div>
-
-
-        
-        
-    <div class="widget">
-        <h3 class="title">友情链接</h3>
-        <div class="content friends-link">
-        
-            <a href="https://hexo.io/zh-cn/" class="fa" target="_blank">Hexo官网</a>
-        
-        </div>
-    </div>
-
-
-        
-    </aside>
+</aside>
 
                 
             </div>
@@ -361,8 +339,6 @@
     </div>
 </div>
 
-
-	<script src="/js/search.js?rev=@@hash"></script>
 
 
 
