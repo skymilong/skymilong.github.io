@@ -16,11 +16,10 @@
     <link rel="dns-prefetch" href="http://skymilong.cn">
     <!--SEO-->
 
-    <meta name="keywords" content="异常问题">
+    <meta name="keywords" content="kendoUI">
 
 
-    <meta name="description" content="前言同事在上传文件的时候出现了拒绝访问的问题，然而在其他电脑中运行并无问题。 
-解决 通过排查，这个文件夹是确实存在的。properties文件里是这样写的D:\webapp\ROOT\uplo...">
+    <meta name="description" content="kendoUI for Vue 学习之DataSource与ListView前言项目组后面会前后端分离，使用的是另一个项目组正在弄的一个框架，前端Vue ，需要结合我们正在使用的kendoUI，...">
 
 <meta name="baidu-site-verification" content="VlmXmLfhqs">
 
@@ -32,7 +31,7 @@
     <!--Title-->
 
 
-<title>记一次SpringBoot (MultiPartFile)文件上传transferTo()方法FileNotFound异常 | skymilong&#39;s blog</title>
+<title>kendoUI for Vue 之DataSource与ListView | skymilong&#39;s blog</title>
 
 
     <link rel="alternate" href="/atom.xml" title="skymilong&#39;s blog" type="application/atom+xml">
@@ -156,16 +155,16 @@
                     <p id="process"></p>
 <article class="post">
     <div class="post-head">
-        <h1 id="记一次SpringBoot (MultiPartFile)文件上传transferTo()方法FileNotFound异常">
+        <h1 id="kendoUI for Vue 之DataSource与ListView">
             
-	            记一次SpringBoot (MultiPartFile)文件上传transferTo()方法FileNotFound异常
+	            kendoUI for Vue 之DataSource与ListView
             
         </h1>
         <div class="post-meta">
     
         <span class="categories-meta fa-wrap">
             <i class="fa fa-folder-open-o"></i>
-            <a class="category-link" href="/categories/后端/">后端</a>
+            <a class="category-link" href="/categories/vue/">vue</a>
         </span>
     
 
@@ -174,7 +173,7 @@
             <i class="fa fa-tags"></i>
             <span class="tags-meta">
                 
-                    <a class="tag-link" href="/tags/异常问题/">异常问题</a>
+                    <a class="tag-link" href="/tags/kendoUI/">kendoUI</a>
                 
             </span>
         </span>
@@ -184,7 +183,7 @@
         
         <span class="fa-wrap">
             <i class="fa fa-clock-o"></i>
-            <span class="date-meta">2019/02/21</span>
+            <span class="date-meta">2019/04/09</span>
         </span>
         
             <span class="fa-wrap">
@@ -199,9 +198,12 @@
     </div>
     
     <div class="post-body post-content">
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>同事在上传文件的时候出现了拒绝访问的问题，然而在其他电脑中运行并无问题。 </p>
-<h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><p> 通过排查，这个文件夹是确实存在的。<code>properties</code>文件里是这样写的<code>D:\webapp\ROOT\uploads</code><br>再看代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">public Map uploadFile(@RequestParam(&quot;uploadFile&quot;) MultipartFile file) &#123;</span><br><span class="line">       Map result = new HashMap();</span><br><span class="line">       result.put(&quot;msg&quot;, &quot;failed&quot;);</span><br><span class="line">       if (file.isEmpty()) &#123;</span><br><span class="line">           return result;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       String fileName = file.getOriginalFilename();</span><br><span class="line">       result.put(&quot;fileName&quot;, file.getOriginalFilename());</span><br><span class="line">       logger.info(&quot;upload file name: &quot; + fileName);</span><br><span class="line">       String suffixName = fileName.substring(fileName.lastIndexOf(&quot;.&quot;));</span><br><span class="line">       fileName = fileName.substring(0, fileName.lastIndexOf(&quot;.&quot;))</span><br><span class="line">               + DateTime.now().toString(&quot;yyyyMMddHHmmssSSS&quot;) + suffixName;</span><br><span class="line">       logger.info(&quot;upload file suffix: &quot; + suffixName);</span><br><span class="line"></span><br><span class="line">       File directory = new File(uploadPath);</span><br><span class="line">       try &#123;</span><br><span class="line">           String filePath = directory.getCanonicalPath();</span><br><span class="line">           File dest = new File(filePath + File.separator + fileName);</span><br><span class="line">           if (!dest.getParentFile().exists()) &#123;</span><br><span class="line">               dest.getParentFile().mkdirs();</span><br><span class="line">           &#125;</span><br><span class="line">           file.transferTo(dest);</span><br><span class="line">           result.put(&quot;msg&quot;, &quot;success&quot;);</span><br><span class="line">           result.put(&quot;url&quot;, urlPrefix + &quot;/&quot; + fileName);</span><br><span class="line">           return result;</span><br><span class="line">       &#125; catch (IllegalStateException e) &#123;</span><br><span class="line">           e.printStackTrace();</span><br><span class="line">       &#125; catch (IOException e) &#123;</span><br><span class="line">           e.printStackTrace();</span><br><span class="line">       &#125;</span><br><span class="line">       return result;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
-<p>发现代码并没有问题，常见的错误并没有在代码中体现出来。 这应该也算是比较标准的上传了。<br>那问题在哪儿呢？<br>回想错误：<strong> 拒绝访问</strong><br>这边首先考虑权限问题。最后果然解决。<br>解决方案是把<code>properties</code> 配置的上传路径改为tomcat的路径<code>D:\tomcat\webapp\ROOT\uploads</code> </p>
+        <h1 id="kendoUI-for-Vue-学习之DataSource与ListView"><a href="#kendoUI-for-Vue-学习之DataSource与ListView" class="headerlink" title="kendoUI for Vue 学习之DataSource与ListView"></a>kendoUI for Vue 学习之DataSource与ListView</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>项目组后面会前后端分离，使用的是另一个项目组正在弄的一个框架，前端Vue ，需要结合我们正在使用的kendoUI，然后苦于国内用的人少，所以只好自己摸索了(=，=后端狗一个)。KendoUI 竟然也支持了Vue，这算是一件好事了。</p>
+<h2 id="DataSource-amp-ListView"><a href="#DataSource-amp-ListView" class="headerlink" title="DataSource &amp; ListView"></a>DataSource &amp; ListView</h2><p>用的最多的东西就是DataSource 了，不管ListView 还是TreeView 或者Grid。<br>首先引入</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span>  <span class="string">"@progress/kendo-ui"</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">ListView,</span><br><span class="line">ListViewInstaller</span><br><span class="line">&#125; <span class="keyword">from</span>  <span class="string">"@progress/kendo-listview-vue-wrapper"</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">DataSource,</span><br><span class="line">DataSourceInstaller</span><br><span class="line">&#125; <span class="keyword">from</span>  <span class="string">"@progress/kendo-datasource-vue-wrapper"</span>;</span><br><span class="line"></span><br><span class="line">Vue.use(DataSourceInstaller);</span><br><span class="line">Vue.use(ListViewInstaller);</span><br></pre></td></tr></table></figure>
+<p>然后在模板里开始用<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> @<span class="attr">keyup.enter</span>=<span class="string">"search"</span> <span class="attr">v-model</span>=<span class="string">"keywords"</span> /&gt;</span></span><br><span class="line">  </span><br><span class="line">  <span class="tag">&lt;<span class="name">kendo-datasource</span>  <span class="attr">ref</span>=<span class="string">"dataSource"</span>           </span></span><br><span class="line"><span class="tag">  <span class="attr">:transport</span>=<span class="string">"listViewTransport"</span>  </span></span><br><span class="line"><span class="tag">  &gt;</span><span class="tag">&lt;/<span class="name">kendo-datasource</span>&gt;</span></span><br><span class="line">  </span><br><span class="line">  <span class="tag">&lt;<span class="name">kendo-listview</span> <span class="attr">:data-source-ref</span>=<span class="string">"'dataSource'"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">:template</span>=<span class="string">"listTemplate"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">:selectable</span>=<span class="string">"'single'"</span></span></span><br><span class="line"><span class="tag">  &gt;</span><span class="tag">&lt;/<span class="name">kendo-listview</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>这里的<code>kendo-datasource</code> 可以用官网说的那种方法，直接写<code>props</code>，我呢因为习惯了<code>transport</code>的方式（个人感觉这个好用点），所以就直接这么写了。其实官网文档并没有看到直接弄<code>transport</code>的，我也是凭感觉写的。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">data()&#123;</span><br><span class="line">keywords:<span class="string">''</span>,</span><br><span class="line">listTemplate:  <span class="string">'&lt;div class="xzqhListView" &gt;#:data.XZMC?data.XZMC:data.WGMC#&lt;/div&gt;'</span>,</span><br><span class="line">listViewTransport: &#123;</span><br><span class="line">  read: &#123;</span><br><span class="line">    url:  <span class="string">"apiv/common-api/getlist"</span>,</span><br><span class="line">    cache:  <span class="literal">false</span>,</span><br><span class="line">    type:  <span class="string">"GET"</span>,</span><br><span class="line">    data: <span class="function"><span class="params">()</span>=&gt;</span> &#123;  <span class="comment">//用箭头可以共用this，方便获取keywords</span></span><br><span class="line">      <span class="keyword">var</span>  jsnr  =  <span class="keyword">this</span>.keywords;</span><br><span class="line">      <span class="keyword">if</span>(jsnr==<span class="string">''</span>)&#123;</span><br><span class="line">        jsnr=<span class="string">"*"</span>;</span><br><span class="line">      &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        jsnr=<span class="string">"*"</span>+jsnr.toUpperCase()+<span class="string">"*"</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">var</span>  params  = &#123;</span><br><span class="line">        jsnr:  jsnr,</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span>  params;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;,</span><br><span class="line">methods:&#123;</span><br><span class="line">  search:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">//这里dataSource对应ref的值，kendoWidget()是获取自身实例</span></span><br><span class="line">    <span class="comment">//然后调用read()方法重新获取。请求的params是keywords</span></span><br><span class="line">     <span class="keyword">this</span>.$refs.dataSource.kendoWidget().read();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>感觉是差不多和原来Kendo for Vue 的用法差不多吧。然后listView这里需要自己绑定模板。<code>:data-source-ref</code> 填<code>dataSource</code>里的<code>ref</code>的值就OK。我这里是一个简单搜索。记录下学习过程。</p>
 
     </div>
     
@@ -239,15 +241,15 @@
 
 <div class="article-nav prev-next-wrap clearfix">
     
-        <a href="/2019/02/27/为什么重写equals方法一定也要重写hashCode/" class="pre-post btn btn-default" title="为什么重写equals方法一定也要重写hashCode？">
+        <a href="/2019/04/09/kendoUI for Vue 学习01.resource/commit/" class="pre-post btn btn-default" title="">
             <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
-            <span class="hidden-xs">为什么重写equals方法一定也要重写hashCode？</span>
+            <span class="hidden-xs"></span>
         </a>
     
     
-        <a href="/2019/02/20/观察者模式和发布订阅模式/" class="next-post btn btn-default" title="观察者模式和发布订阅模式">
+        <a href="/2019/03/19/elasticsearch01/" class="next-post btn btn-default" title="elasticsearch 5.6 JAVA客户端LowClient实现update_by_query">
             <span class="hidden-lg">下一篇</span>
-            <span class="hidden-xs">观察者模式和发布订阅模式</span><i class="fa fa-angle-right fa-fw"></i>
+            <span class="hidden-xs">elasticsearch 5.6 JAVA客户端LowClient实现update_by_query</span><i class="fa fa-angle-right fa-fw"></i>
         </a>
     
 </div>
@@ -290,7 +292,7 @@
     <div class="widget">
         <h3 class="title">Table of Contents</h3>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决"><span class="toc-text">解决</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#kendoUI-for-Vue-学习之DataSource与ListView"><span class="toc-text">kendoUI for Vue 学习之DataSource与ListView</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DataSource-amp-ListView"><span class="toc-text">DataSource &amp; ListView</span></a></li></ol></li></ol>
         
     </div>
 </aside>

@@ -19,7 +19,14 @@
     <meta name="keywords" content="java">
 
 
-    <meta name="description" content="null">
+    <meta name="description" content="重构
+公共jar包，舍弃kedacom的jar包
+数据库改用mysql，使用mybatis工具
+公共工具类
+公共缓存类
+公共Service类
+common包问题
+ezsafe-index–配置a...">
 
 <meta name="baidu-site-verification" content="VlmXmLfhqs">
 
@@ -31,7 +38,7 @@
     <!--Title-->
 
 
-<title>Tag: 异常问题 | skymilong&#39;s blog</title>
+<title>skymilong&#39;s blog</title>
 
 
     <link rel="alternate" href="/atom.xml" title="skymilong&#39;s blog" type="application/atom+xml">
@@ -151,38 +158,143 @@
     <section class="content-wrap">
         <div class="container">
             <div class="row">
-                <main class="col-md-8 main-content ">
-                    <h3>
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="">
+            
+	            NO Title!
+            
+        </h1>
+        <div class="post-meta">
     
-        异常问题
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            
+        </span>
     
-    
-</h3>
 
-    <article class="post">
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+            </span>
+        </span>
+    
+
+    
         
-        <div class="post-content">
-            <div class="post-head home-post-head">
-                <h1 class="post-title">
-                    <a href="/2019/02/21/file-not-found-transferTo/">记一次SpringBoot (MultiPartFile)文件上传transferTo()方法FileNotFound异常</a>
-                </h1>
-                <div class="post-meta">  &bull;
-                    <time class="post-date" datetime="" title="">
-                        2019年02月21日
-                    </time>
-                </div>
-            </div>
-            <p class="brief">
-                
-                    前言同事在上传文件的时候出现了拒绝访问的问题，然而在其他电脑中运行并无问题。 
-解决 通过排查，这个文件夹是确实存在的。properties文件里是这样写的D:\webapp\ROOT\uploads再看代码：123456789101...
-                
-            </p>
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2019/07/11</span>
+        </span>
+        
+            <span class="fa-wrap">
+                <i class="fa fa-eye"></i>
+                <span id="busuanzi_value_page_pv"></span>
+            </span>
+        
+    
+</div>
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <h2 id="重构"><a href="#重构" class="headerlink" title="重构"></a>重构</h2><ol>
+<li>公共jar包，舍弃kedacom的jar包</li>
+<li>数据库改用mysql，使用mybatis工具</li>
+<li>公共工具类</li>
+<li>公共缓存类</li>
+<li>公共Service类</li>
+<li>common包<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2></li>
+<li>ezsafe-index–配置application-dev.yml，从Index启动</li>
+<li>domain-&gt;model </li>
+<li>下载lombok插件</li>
+<li>拼音工具类改用pinyin4j </li>
+<li>缓存加载类：PzxxCacheRunner</li>
+<li>@PostConstruct 可以用来赋初始值 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> String  smsServiceUrl; </span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> String smsPwd; </span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> String smsUser;   </span><br><span class="line"><span class="meta">@PostConstruct</span> </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span>&#123;</span><br><span class="line">    smsServiceUrl = xtpzCache.getPzxx(<span class="string">"smsServiceUrl"</span>);</span><br><span class="line">  smsUser =xtpzCache.getPzxx(<span class="string">"smsUser"</span>);</span><br><span class="line">  smsPwd = xtpzCache.getPzxx(<span class="string">"smsPwd"</span>); &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+
+    </div>
+    
+        <div class="reward" ontouchstart="">
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+                <span class="reward-type">
+                    <img class="alipay" src="../../../../img/zfb.jpg"><b>支付宝打赏</b>
+                </span>
+            
+            
+                <span class="reward-type">
+                    <img class="wechat" src="../../../../img/wx.png"><b>微信打赏</b>
+                </span>
+            
         </div>
-    </article>
- 
+    </div>
+    <p class="reward-tip">赞赏是不耍流氓的鼓励</p>
+</div>
 
 
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href="" target="_blank">skymilong</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2019/07/15/ezsafe.resource/commit/" class="pre-post btn btn-default" title="">
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs"></span>
+        </a>
+    
+    
+        <a href="/2019/04/18/mysql_error/" class="next-post btn btn-default" title="记一次mysql连接出错：Unable to load authentication plugin " caching_sha2_pa'="">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">记一次mysql连接出错：Unable to load authentication plugin 'caching_sha2_pa</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+	
+    <div id="sky-vcomments" class="valine"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="/assets/valine.min.js"></script>
+
+    <script>
+        new Valine({
+            av: AV,
+            el: '#sky-vcomments',
+            appId: 'ijSgkbeN9JBuYk81UPpFkPDx-gzGzoHsz',
+            appKey: '3oiIti1e4sT1vihpJkLf7vns',
+            placeholder: '说点什么吧',
+            notify: false,
+            verify: false,
+            avatar: 'mp',
+            meta: 'nick,mail'.split(','),
+            pageSize: '10',
+            path: window.location.pathname,
+            lang: 'zh-cn'.toLowerCase()
+        })
+    </script>
+
+
+    </div>
 
 
 
@@ -190,126 +302,14 @@
 
                 </main>
                 
-                    
-    <aside class="col-md-4 sidebar">
-        
-        
+                    <aside id="article-toc" role="navigation" class="col-md-4">
     <div class="widget">
-        <h3 class="title">搜索</h3>
-        <div id="search-form">
-            <div id="result-mask" class="hide"></div>
-            <div class="search-area">
-                
-                    <input id="search-key" type="search" autocomplete="off" placeholder="Search What？">
-                    <button type="button" class="search-form-submit" id="search-local">localSearch</button>
-                
-                
-            </div>
-            <div id="result-wrap" class="hide">
-                <div id="search-result"></div>
-            </div>
-            <div class="hide">
-                <template id="search-tpl">
-                    <div class="item">
-                        <a href="/{path}" title="{title}">
-                            <div class="title">{title}</div>
-                            <div class="content">{content}</div>
-                        </a>
-                    </div>
-                </template>
-            </div>
-        </div>
-    </div>
-
+        <h3 class="title">Table of Contents</h3>
         
-        
-    <div class="widget">
-        <h3 class="title">公告</h3>
-        <div class="notification">
-            <p>
-    暂无
-</p>
-        </div>
-    </div>
-
-        
-        
-    <div class="widget">
-      <h3 class="title">关于我</h3> 
-        <div class="content social">
-            
-	            <a href="//github.com/skymilong" rel="external nofollow" title="Github" target="_blank">
-			    	<i class="git fa fa-git"></i>
-			    </a>
-            
-	            <a href="mailto:skymilong@gmail.com" rel="external nofollow" title="邮箱" target="_blank">
-			    	<i class="envelope-o fa fa-envelope-o"></i>
-			    </a>
-            
-	            <a href="/" rel="external nofollow" title="联系QQ" target="_blank">
-			    	<i class="qq fa fa-qq"></i>
-			    </a>
-            
-	            <a href="/" rel="external nofollow" title="微信" target="_blank">
-			    	<i class="weixin fa fa-weixin"></i>
-			    </a>
-            
-	            <a href="/" rel="external nofollow" title="QQ群" target="_blank">
-			    	<i class="users fa fa-users"></i>
-			    </a>
-            
-	            <a href="/atom.xml" rel="external nofollow" title="RSS" target="_blank">
-			    	<i class="feed fa fa-feed"></i>
-			    </a>
-            
-        </div>
-    </div>
-
-
-        
-        
-    <div class="widget">
-        <h3 class="title">分类</h3>
-        <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/vue/"><i class="fa" aria-hidden="true">vue</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/后端/"><i class="fa" aria-hidden="true">后端</i></a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/工具/"><i class="fa" aria-hidden="true">工具</i></a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/软件/"><i class="fa" aria-hidden="true">软件</i></a><span class="category-list-count">1</span></li></ul>
-    </div>
-
-
-        
-        
-    <div class="widget">
-        <h3 class="title">归档</h3>
-        <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/"><i class="fa" aria-hidden="true">2019年07月</i></a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/"><i class="fa" aria-hidden="true">2019年04月</i></a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/"><i class="fa" aria-hidden="true">2019年03月</i></a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/"><i class="fa" aria-hidden="true">2019年02月</i></a><span class="archive-list-count">5</span></li></ul>
-    </div>
-
-
-        
-        
-  <div class="widget">
-    <h3 class="title">标签云</h3>
-    <div class="content tag-cloud">
-        
-            <canvas width="300" height="300" id="tag-cloud-3d">
-                <a href="/tags/elasticsearch/" style="font-size: 10px;">elasticsearch</a> <a href="/tags/kendoUI/" style="font-size: 10px;">kendoUI</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/异常问题/" style="font-size: 10px;">异常问题</a> <a href="/tags/经验分享/" style="font-size: 10px;">经验分享</a> <a href="/tags/补丁/" style="font-size: 20px;">补丁</a> <a href="/tags/设计模式/" style="font-size: 10px;">设计模式</a>
-            </canvas>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#重构"><span class="toc-text">重构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题"><span class="toc-text">问题</span></a></li></ol>
         
     </div>
-  </div>
-
-
-        
-        
-    <div class="widget">
-        <h3 class="title">友情链接</h3>
-        <div class="content friends-link">
-        
-            <a href="https://hexo.io/zh-cn/" class="fa" target="_blank">Hexo官网</a>
-        
-        </div>
-    </div>
-
-
-        
-    </aside>
+</aside>
 
                 
             </div>
@@ -362,8 +362,6 @@
     </div>
 </div>
 
-
-	<script src="/js/search.js?rev=@@hash"></script>
 
 
 
