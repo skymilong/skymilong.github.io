@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://skymilong.cn/"/>
-  <updated>2019-08-20T02:49:17.424Z</updated>
+  <updated>2019-08-20T02:49:17.422Z</updated>
   <id>http://skymilong.cn/</id>
   
   <author>
@@ -15,30 +15,6 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title></title>
-    <link href="http://skymilong.cn/2019/07/11/%E9%87%8D%E6%9E%84/"/>
-    <id>http://skymilong.cn/2019/07/11/重构/</id>
-    <published>2019-07-11T07:19:47.919Z</published>
-    <updated>2019-08-20T02:49:17.424Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="重构"><a href="#重构" class="headerlink" title="重构"></a>重构</h2><ol><li>公共jar包，舍弃kedacom的jar包</li><li>数据库改用mysql，使用mybatis工具</li><li>公共工具类</li><li>公共缓存类</li><li>公共Service类</li><li>common包<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2></li><li>ezsafe-index–配置application-dev.yml，从Index启动</li><li>domain-&gt;model </li><li>下载lombok插件</li><li>拼音工具类改用pinyin4j </li><li>缓存加载类：PzxxCacheRunner</li><li>@PostConstruct 可以用来赋初始值 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> String  smsServiceUrl; </span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> String smsPwd; </span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> String smsUser;   </span><br><span class="line"><span class="meta">@PostConstruct</span> </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span>&#123;</span><br><span class="line">    smsServiceUrl = xtpzCache.getPzxx(<span class="string">"smsServiceUrl"</span>);</span><br><span class="line">  smsUser =xtpzCache.getPzxx(<span class="string">"smsUser"</span>);</span><br><span class="line">  smsPwd = xtpzCache.getPzxx(<span class="string">"smsPwd"</span>); &#125;</span><br></pre></td></tr></table></figure></li></ol>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;重构&quot;&gt;&lt;a href=&quot;#重构&quot; class=&quot;headerlink&quot; title=&quot;重构&quot;&gt;&lt;/a&gt;重构&lt;/h2&gt;&lt;ol&gt;
-&lt;li&gt;公共jar包，舍弃kedacom的jar包&lt;/li&gt;
-&lt;li&gt;数据库改用mysql，使用mybatis工具&lt;/li&gt;
-&lt;li&gt;公
-      
-    
-    </summary>
-    
-    
-  </entry>
   
   <entry>
     <title>记一次mysql连接出错：Unable to load authentication plugin &#39;caching_sha2_pa</title>
