@@ -16,12 +16,11 @@
     <link rel="dns-prefetch" href="http://skymilong.cn">
     <!--SEO-->
 
-    <meta name="keywords" content="补丁">
+    <meta name="keywords" content="elasticsearch">
 
 
-    <meta name="description" content="下载地址LinuxOSX:windows
-转自 www.52pojie.cn
-">
+    <meta name="description" content="因为需求改动，必须要去删除一个数组的其中一个对象.如下例子，要根据 ID 去删除。一般的修改可以直接 update，但是 cars 里面是数组，不好更新。
+123456789101112cars...">
 
 <meta name="baidu-site-verification" content="VlmXmLfhqs">
 
@@ -33,7 +32,7 @@
     <!--Title-->
 
 
-<title>CompareBeyond Crack 全版本破解补丁 | skymilong&#39;s blog</title>
+<title>elasticsearch 根据条件对数组字段进行删除 | skymilong&#39;s blog</title>
 
 
     <link rel="alternate" href="/atom.xml" title="skymilong&#39;s blog" type="application/atom+xml">
@@ -157,16 +156,16 @@
                     <p id="process"></p>
 <article class="post">
     <div class="post-head">
-        <h1 id="CompareBeyond Crack 全版本破解补丁">
+        <h1 id="elasticsearch 根据条件对数组字段进行删除">
             
-	            CompareBeyond Crack 全版本破解补丁
+	            elasticsearch 根据条件对数组字段进行删除
             
         </h1>
         <div class="post-meta">
     
         <span class="categories-meta fa-wrap">
             <i class="fa fa-folder-open-o"></i>
-            <a class="category-link" href="/categories/工具/">工具</a>
+            <a class="category-link" href="/categories/ES/">ES</a>
         </span>
     
 
@@ -175,7 +174,7 @@
             <i class="fa fa-tags"></i>
             <span class="tags-meta">
                 
-                    <a class="tag-link" href="/tags/补丁/">补丁</a>
+                    <a class="tag-link" href="/tags/elasticsearch/">elasticsearch</a>
                 
             </span>
         </span>
@@ -185,7 +184,7 @@
         
         <span class="fa-wrap">
             <i class="fa fa-clock-o"></i>
-            <span class="date-meta">2019/02/14</span>
+            <span class="date-meta">2019/08/28</span>
         </span>
         
             <span class="fa-wrap">
@@ -200,8 +199,14 @@
     </div>
     
     <div class="post-body post-content">
-        <h2 id="下载地址"><a href="#下载地址" class="headerlink" title="下载地址"></a>下载地址</h2><p><a href="https://down.52pojie.cn/Tools/Editors/Beyond.Compare.Pro.v4.0.7.19761.Linux.CracKed.zip" target="_blank" rel="noopener"><strong>Linux</strong></a><br><a href="https://down.52pojie.cn/Tools/Editors/Beyond.Compare.Pro.v4.0.7.19761.OSX.CracKed.zip" target="_blank" rel="noopener"><strong>OSX</strong></a>:<br><a href="https://down.52pojie.cn/Tools/Editors/Beyond.Compare.Pro.v4.x.Windows.CracKed.7z" target="_blank" rel="noopener"><strong>windows</strong></a></p>
-<p><strong>转自 <a href="http://www.52pojie.cn" target="_blank" rel="noopener">www.52pojie.cn</a></strong></p>
+        <p>因为需求改动，必须要去删除一个数组的其中一个对象.<br>如下例子，要根据 ID 去删除。一般的修改可以直接 update，但是 cars 里面是数组，不好更新。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">cars:[</span><br><span class="line">&#123;</span><br><span class="line">    color:'white',</span><br><span class="line">    size:'big',</span><br><span class="line">    id:'1'</span><br><span class="line">&#125;,</span><br><span class="line">&#123;</span><br><span class="line">    color:'white',</span><br><span class="line">    size:'small',</span><br><span class="line">    id:'2'</span><br><span class="line">&#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>后求助社区用<code>script processor</code>解决</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">post car/bm/_update_by_query</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"query"</span>:&#123;</span><br><span class="line">    <span class="attr">"match_all"</span>: &#123;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"script"</span>: &#123;</span><br><span class="line">    <span class="attr">"lang"</span>: <span class="string">"painless"</span>,</span><br><span class="line">    <span class="attr">"source"</span>: <span class="string">"ctx.cars = ctx.cars.stream().filter(x -&gt; !x.id.equals('1')).collect(Collectors.toList())"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>后面因为会经常调用，所以干脆写了个 script<br>传入 id 到 params，即可。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">POST _scripts/delete-car</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"script"</span>: &#123;</span><br><span class="line">    <span class="attr">"lang"</span>: <span class="string">"painless"</span>,</span><br><span class="line">     <span class="attr">"source"</span>: <span class="string">"ctx.cars = ctx.cars.stream().filter(x -&gt; !x.id.equals(params.id)).collect(Collectors.toList())"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>调用更新如下</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">POST car/bm/_update_by_query</span><br><span class="line">&#123;</span><br><span class="line"> <span class="attr">"query"</span>:&#123;</span><br><span class="line">    <span class="attr">"match"</span>: &#123;</span><br><span class="line">      <span class="attr">"infoid"</span>: <span class="string">"1566882918000"</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"script"</span>: &#123;</span><br><span class="line">     <span class="attr">"id"</span>: <span class="string">"delete-car"</span>,</span><br><span class="line">        <span class="attr">"params"</span>: &#123;</span><br><span class="line">          <span class="attr">"id"</span>:<span class="string">"1"</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
     </div>
     
@@ -239,11 +244,11 @@
 
 <div class="article-nav prev-next-wrap clearfix">
     
-        <a href="/2019/02/15/ssf-share/" class="pre-post btn btn-default" title="搜狗拼音绅士皮肤分享（斯文+流氓）">
-            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
-            <span class="hidden-xs">搜狗拼音绅士皮肤分享（斯文+流氓）</span>
-        </a>
     
+        <a href="/2019/04/18/mysql_error/" class="next-post btn btn-default" title="记一次mysql连接出错：Unable to load authentication plugin " caching_sha2_pa'="">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">记一次mysql连接出错：Unable to load authentication plugin 'caching_sha2_pa</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
     
 </div>
 
@@ -285,7 +290,7 @@
     <div class="widget">
         <h3 class="title">Table of Contents</h3>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#下载地址"><span class="toc-text">下载地址</span></a></li></ol>
+            <p>暂无目录</p>
         
     </div>
 </aside>
